@@ -1,5 +1,5 @@
 let phrase= $(".phrase").text();
-let trimmedPhrase=phrase.trim()
+let phraseTrimmed=phrase.replace(/\s+/g, ' ').trim()
 let wordCount=phrase.trim().split(" ").length;
 let timeLimit=$("#time-limit");
 timeLimit.text(wordCount+2);
@@ -8,18 +8,32 @@ phraseSize.text(wordCount);
 let gameButton=$(".game-button")
 gameButton.html("Start")
 let typingArea=$(".typing-area");
-typingArea.on("input",function () {
-    $("#word-counter").text(typingArea.val().trim().length !== 0 ? typingArea.val().replace(/\s+/g, ' ').trim().split(" ").length : 0);
-    $("#char-counter").text(typingArea.val().trim().length);
-})
 let timelimitValue=parseInt(timeLimit.text());
+let resultMessaage=$("#result-message")
 gameButton.on("click",function() {
     game();
 })
 
+
+
 function game() {
     startGame()
-    countdown()
+    let chronoId;
+    countdown(chronoId)
+}
+function eachInput(chronoId){
+    typingArea.on("input",function () {
+        updateCount()
+        if(checkIfWon()) {
+            clearInterval(chronoId);
+            typingArea.attr("disabled",true)
+            resultMessaage.text("you won! congratulations")
+        }
+    })
+}
+function updateCount() {
+    $("#word-counter").text(typingArea.val().trim().length !== 0 ? typingArea.val().replace(/\s+/g, ' ').trim().split(" ").length : 0);
+    $("#char-counter").text(typingArea.val().trim().length);
 }
 function startGame() {
     gameButton.attr("disabled",true)
@@ -28,17 +42,21 @@ function startGame() {
     typingArea.attr("disabled",false)
     typingArea.focus();
     typingArea.val("")
+    resultMessaage.text("")
     gameButton.html("Restart");
     gameButton.removeClass("start")
     gameButton.addClass("restart")
 }
-function countdown() {
-    let chronoId=setInterval(function() {
+
+function countdown(chronoId) {
+    chronoId=setInterval(function() {
+        eachInput(chronoId)
         gameButton.attr("disabled",false)
         timelimitValue > 0 ? timelimitValue-- : 0;
         timeLimit.text(timelimitValue);
         if(timelimitValue < 1) {
             typingArea.attr("disabled",true)
+            resultMessaage.text("you lost! please try again")
             clearInterval(chronoId);
         }
         $(".restart").one("click",function(event) {
@@ -47,5 +65,9 @@ function countdown() {
             $("#char-counter").text(0);
         })
     }, 1000)
+}
+function checkIfWon() {
+    let currentTyped=typingArea.val().replace(/\s+/g, ' ').trim();
+    return phraseTrimmed === currentTyped;
 }
 
