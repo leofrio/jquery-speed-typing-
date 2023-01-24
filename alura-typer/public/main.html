@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Speed Typer</title>
+    <link rel="stylesheet" href="./css/libs/google-fonts.css">
+    <link rel="stylesheet" href="./css/libs/materialize.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+<div class="container center">
+    <h1>Speed Typer</h1>
+
+    <p class="phrase">one two three four five </p>
+    <ul>
+        <li class="list-item">
+            <i class="material-icons list-item-icon">description</i>
+            <p class="list-item-text"><span id="phrase-size"></span> words</p>
+        </li>
+        <li class="list-item">
+            <i class="material-icons  list-item-icon">query_builder</i>
+            <p class="list-item-text "><span id="time-limit"></span> seconds</p>
+        </li>
+    </ul>
+
+    <textarea class="typing-area ready-for-use" rows="8" cols="40" disabled> </textarea>
+    <button class="game-button start">Start</button>
+    <ul>
+        <li><span id="char-counter">0</span> characters</li>
+        <li><span id="word-counter">0</span> words</li>
+    </ul>
+    <p id="result-message"></p>
+    <script src="js/jquery.js"></script>
+    <script src="js/main.js"></script>
+</div>
+</body>
+</html>
+

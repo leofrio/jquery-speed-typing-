@@ -1,0 +1,37 @@
+.typing-area {
+    font-size: 1.5rem ;
+    height: 9.375rem;
+;
+}
+.phrase {
+    font-size: 1.5rem;
+}
+.disabled-area {
+    background-color: lightgray;
+}
+.ready-for-use {
+    background-color: transparent;
+}
+.list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 0.375rem;
+}
+.list-item-icon {
+    vertical-align: middle;
+    font-size: 1.5rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 0.142857143rem;
+    padding-bottom: 0.142857143rem;
+    margin-right: 0.285714286rem;
+}
+.list-item-text {
+    padding-top: 0.142857143rem;
+    vertical-align: middle;
+    margin-top: auto;
+    margin-bottom:auto ;
+    justify-content: center;
+}

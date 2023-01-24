@@ -25,9 +25,7 @@ function eachInput(chronoId){
     typingArea.on("input",function () {
         updateCount()
         if(checkIfWon()) {
-            clearInterval(chronoId);
-            typingArea.attr("disabled",true)
-            resultMessaage.text("you won! congratulations")
+            endGame(chronoId,1)
         }
     })
 }
@@ -45,6 +43,7 @@ function startGame() {
     resultMessaage.text("")
     gameButton.html("Restart");
     gameButton.removeClass("start")
+    typingArea.removeClass("disabled-area")
     gameButton.addClass("restart")
 }
 
@@ -55,9 +54,7 @@ function countdown(chronoId) {
         timelimitValue > 0 ? timelimitValue-- : 0;
         timeLimit.text(timelimitValue);
         if(timelimitValue < 1) {
-            typingArea.attr("disabled",true)
-            resultMessaage.text("you lost! please try again")
-            clearInterval(chronoId);
+            endGame(chronoId,0)
         }
         $(".restart").one("click",function(event) {
             clearInterval(chronoId)
@@ -70,4 +67,10 @@ function checkIfWon() {
     let currentTyped=typingArea.val().replace(/\s+/g, ' ').trim();
     return phraseTrimmed === currentTyped;
 }
-
+function endGame(chronoId,code) {
+    clearInterval(chronoId)
+    typingArea.attr("disabled",true)
+    typingArea.removeClass("ready-for-use")
+    typingArea.addClass("disabled-area")
+    resultMessaage.text(code === 0 ? "you lost! please try again" : "you won! congratulations!")
+}
