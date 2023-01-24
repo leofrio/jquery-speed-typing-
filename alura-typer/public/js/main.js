@@ -9,9 +9,8 @@ let gameButton=$(".game-button")
 gameButton.html("Start")
 let typingArea=$(".typing-area");
 typingArea.on("input",function () {
-    $("#word-counter").text(typingArea.val().trim().length !== 0 ? typingArea.val().trim().split(" ").length : 0);
+    $("#word-counter").text(typingArea.val().trim().length !== 0 ? typingArea.val().replace(/\s+/g, ' ').trim().split(" ").length : 0);
     $("#char-counter").text(typingArea.val().trim().length);
-
 })
 let timelimitValue=parseInt(timeLimit.text());
 gameButton.on("click",function() {
@@ -19,6 +18,10 @@ gameButton.on("click",function() {
 })
 
 function game() {
+    startGame()
+    countdown()
+}
+function startGame() {
     gameButton.attr("disabled",true)
     timelimitValue=wordCount +2;
     timeLimit.text(timelimitValue);
@@ -28,7 +31,8 @@ function game() {
     gameButton.html("Restart");
     gameButton.removeClass("start")
     gameButton.addClass("restart")
-    console.log('test');
+}
+function countdown() {
     let chronoId=setInterval(function() {
         gameButton.attr("disabled",false)
         timelimitValue > 0 ? timelimitValue-- : 0;
@@ -44,5 +48,4 @@ function game() {
         })
     }, 1000)
 }
-
 
