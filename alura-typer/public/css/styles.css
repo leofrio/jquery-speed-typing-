@@ -35,3 +35,12 @@
     margin-bottom:auto ;
     justify-content: center;
 }
+#game-button-icon {
+    margin-right: 0.428571432rem;
+}
+.right-highlight {
+    background-color: rgba(0, 255, 3, 0.36)
+}
+.wrong-highlight {
+    background-color: rgba(255, 0, 0, 0.36);
+}
