@@ -1,6 +1,6 @@
 var api = {};
 
-var frases = [
+var phrases = [
 	{_id: 0, texto:'Alura, Cursos online de tecnologia que reinventam sua carreira.', tempo: 15 },
 	{_id: 1, texto:'Debuggers não consertam erros, apenas os exibem em slow motion.',tempo: 8 },
 	{_id: 2, texto:'Caelum, Ensino e Inovação.', tempo: 5 },
@@ -17,9 +17,9 @@ var frases = [
 api.lista = function(req, res) {
 
 	setTimeout(function(){
-		if(req.query.id) return res.json(frases[req.query.id]);
+		if(req.query.id) return res.json(phrases[req.query.id]);
 
-		res.json(frases);
+		res.json(phrases);
 	},1500);
 
 };
