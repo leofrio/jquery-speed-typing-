@@ -9,6 +9,7 @@ let gameButton=$(".game-button")
 let buttonText=$(".button-text")
 let gameButtonIcon=$("#game-button-icon")
 buttonText.text("Start")
+let score=$(".score-value")
 let typingArea=$(".typing-area");
 let timelimitValue=parseInt(timeLimit.text());
 let resultMessaage=$("#result-message")
