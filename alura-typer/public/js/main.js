@@ -28,14 +28,16 @@ function eachInput(chronoId){
     typingArea.on("input",function () {
         updateCount()
         highlightRightWrong()
+        calculateScore(false)
         if(checkIfWon()) {
+            calculateScore(true)
             endGame(chronoId,1)
         }
     })
 }
 function highlightRightWrong() {
-    let typed=typingArea.val();
-    let trimmedPhrase=phrase.trim()
+    let typed=typingArea.val().replace(/\s+/g, ' ').trim();
+    let trimmedPhrase=phrase.replace(/\s+/g, ' ').trim()
     let comparable=trimmedPhrase.substring(0,typed.length)
     let incomparable=typed.length >= trimmedPhrase.length ? "" : trimmedPhrase.substring(typed.length,trimmedPhrase.length)
     let right =checkWhatWasRightBefore(comparable.length)
@@ -44,14 +46,13 @@ function highlightRightWrong() {
         "<span class='right-highlight'>" + right + "</span>" +
         "<span class='wrong-highlight'>" + wrong + "</span>" +
         incomparable)
-    console.log(right )
 }
 function checkWhatWasRightBefore(lastIndex) {
     if(lastIndex === 0) {
         return ""
     }
-    let trimmedSubPhrase=phrase.trim().substring(0,lastIndex)
-    let typedSub=typingArea.val().substring(0,lastIndex);
+    let trimmedSubPhrase=phrase.replace(/\s+/g, ' ').trim().substring(0,lastIndex)
+    let typedSub=typingArea.val().replace(/\s+/g, ' ').trim().substring(0,lastIndex);
     if(typedSub === trimmedSubPhrase) {
         return typedSub
     }else {
@@ -60,7 +61,7 @@ function checkWhatWasRightBefore(lastIndex) {
 }
 function updateCount() {
     $("#word-counter").text(typingArea.val().trim().length !== 0 ? typingArea.val().replace(/\s+/g, ' ').trim().split(" ").length : 0);
-    $("#char-counter").text(typingArea.val().trim().length);
+    $("#char-counter").text(typingArea.val().replace(/\s+/g, ' ').trim().length );
 }
 function startGame() {
     gameButton.attr("disabled",true)
@@ -78,6 +79,7 @@ function startGame() {
     gameButton.addClass("restart")
 }
 
+
 function countdown(chronoId) {
     chronoId=setInterval(function() {
         eachInput(chronoId)
@@ -93,6 +95,14 @@ function countdown(chronoId) {
             $("#char-counter").text(0);
         })
     }, 1000)
+}
+function calculateScore(won) {
+    let winBonus = 0
+    if (won) {
+        winBonus = (parseInt($("#time-limit").text()) + 2) * 100
+    }
+    let finalScore = winBonus + (parseInt($("#char-counter").text()) / 2) +(parseInt($("#word-counter").text()));
+    $("#score-value").text(finalScore);
 }
 function checkIfWon() {
     let currentTyped=typingArea.val().replace(/\s+/g, ' ').trim();
