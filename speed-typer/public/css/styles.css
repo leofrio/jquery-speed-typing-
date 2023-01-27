@@ -44,3 +44,11 @@
 .wrong-highlight {
     background-color: rgba(255, 0, 0, 0.36);
 }
+.delete-icon {
+    font-size: 20px;
+    vertical-align: middle;
+}
+.delete-button {
+    cursor: pointer;
+    color: black;
+}

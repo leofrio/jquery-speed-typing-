@@ -160,15 +160,13 @@ function checkIfWon() {
 }
 
 function insertNewScore() {
+    let tbody=$(".ranking").find("tbody")
     let name = $("#submit-score-name").val()
     let score = $("#submit-score-score").text()
     let won = $("#submit-score-won").text()
-    let newLine = "<tr>" +
-        "<td>" + name + "</td>" +
-        "<td>" + score + "</td>" +
-        "<td>" + won + "</td>" +
-        "</tr>"
-    $(".ranking").find("tbody").append(newLine)
+    let newScore=newLine(name,score,won);
+    $(document.body).on("click",".delete-button",deleteScore);
+    tbody.prepend(newScore)
 }
 
 function endGame(chronoId, code) {
@@ -177,19 +175,41 @@ function endGame(chronoId, code) {
     typingArea.removeClass("ready-for-use")
     typingArea.addClass("disabled-area")
     resultMessaage.text(code === 0 ? "you lost! please try again" : "you won! congratulations!")
-    let submitArea=$(".submit-score")
+    let submitArea = $(".submit-score")
     submitArea.attr("hidden", false)
     $("#submit-score-name").focus()
     $("#submit-score-score").text(score.text())
     $("#submit-score-won").text(code === 0 ? "no" : "yes")
-    $(".ranking").find("tbody")
     // $("html, body").animate({
     //     scrollTop: $(
     //         'html, body').get(0).scrollHeight
     // }, 100);
 
 }
-$("#submit-button").on("click",function(event) {
+
+function deleteScore(event) {
+        event.preventDefault()
+        $(this).parent().parent().remove();
+}
+
+function newLine(name, score, won) {
+    let line = $("<tr>")
+    let nameCol=$("<td>").text(name)
+    let scoreCol=$("<td>").text(score)
+    let wonCol= $("<td>").text(won)
+    let removeCol= $("<td>")
+    let btn=$("<a>").addClass("delete-button").attr("href","#")
+    let icon=$("<i>").addClass("material-icons").addClass("delete-icon").text("delete")
+    btn.append(icon);
+    removeCol.append(btn)
+    line.append(nameCol)
+    line.append(scoreCol)
+    line.append(wonCol)
+    line.append(removeCol)
+    return line
+}
+
+$("#submit-button").on("click", function (event) {
     insertNewScore()
     sortRanking()
     $(".submit-score").attr("hidden", true)
